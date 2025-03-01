@@ -1,28 +1,27 @@
-//your JS code here. If required.
-function manipulateData() {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve([1, 2, 3, 4]);
-    }, 3000);
-  })
-  .then((array) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        const evenNumbers = array.filter(num => num % 2 === 0);
-        document.getElementById('output').textContent = evenNumbers.join(',');
-        resolve(evenNumbers);
-      }, 1000);
-    });
-  })
-  .then((evenNumbers) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        const doubledNumbers = evenNumbers.map(num => num * 2);
-        document.getElementById('output').textContent = doubledNumbers.join(',');
-        resolve(doubledNumbers);  
-      }, 2000);
-    });
-  });
-}
+document.addEventListener("DOMContentLoaded", function () {
+    const output = document.getElementById("output");
 
-manipulateData();
+    output.innerHTML = <tr id="loading"><td colspan="2">Loading...</td></tr>;
+
+    function createPromise(index) {
+        let time = (Math.random() * 2 + 1).toFixed(3);
+        return new Promise((resolve) => {
+            setTimeout(() => resolve({ index, time }), time * 1000);
+        });
+    }
+
+    let promises = [createPromise(1), createPromise(2), createPromise(3)];
+
+    Promise.all(promises).then((results) => {
+        document.getElementById("loading").remove();
+
+        let maxTime = 0;
+
+        results.forEach((result) => {
+            maxTime = Math.max(maxTime, parseFloat(result.time));
+            output.innerHTML += <tr><td>Promise ${result.index}</td><td>${result.time}</td></tr>;
+        });
+
+        output.innerHTML += <tr><td>Total</td><td>${maxTime.toFixed(3)}</td></tr>;
+    });
+});
