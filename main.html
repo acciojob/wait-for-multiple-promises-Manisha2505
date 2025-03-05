@@ -42,7 +42,7 @@
 
             // Populate table with results
             results.forEach(result => {
-                const row = document.createElement("tr");
+                const row = document.createElement("tr#loading");
                 row.innerHTML = `<td>Promise ${result.index}</td><td>${result.time.toFixed(3)}</td>`;
                 outputTable.appendChild(row);
             });
