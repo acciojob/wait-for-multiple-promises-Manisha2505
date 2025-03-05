@@ -14,7 +14,7 @@
             </tr>
         </thead>
         <tbody id="output">
-            <tr>
+            <tr id="loading">
                 <td colspan="2">Loading...</td>
             </tr>
         </tbody>
@@ -42,7 +42,7 @@
 
             // Populate table with results
             results.forEach(result => {
-                const row = document.createElement("tr#loading");
+                const row = document.createElement("tr");
                 row.innerHTML = `<td>Promise ${result.index}</td><td>${result.time.toFixed(3)}</td>`;
                 outputTable.appendChild(row);
             });
